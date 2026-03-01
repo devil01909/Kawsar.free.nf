@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ARCHITECT | ULTIMATE</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff0055;
+            --bg-black: #020202;
+            --text-gray: #888;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-black);
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Custom Cursor */
+        }
+
+        /* CUSTOM CURSOR */
+        #cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        /* PRELOADER */
+        #preloader {
+            position: fixed;
+            height: 100vh; width: 100vw;
+            background: #000;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000; font-family: 'Syncopate';
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            position: relative;
+        }
+
+        .main-img-container {
+            position: relative;
+            width: 350px; height: 350px;
+            margin-bottom: 30px;
+            perspective: 1000px;
+        }
+
+        .main-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            filter: grayscale(1) brightness(0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.5s;
+        }
+
+        .glitch-overlay {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('input_file_0.png');
+            background-size: cover;
+            opacity: 0;
+            mix-blend-mode: color-dodge;
+        }
+
+        .title-wrap { text-align: center; z-index: 2; }
+        
+        h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 8vw;
+            line-height: 0.9;
+            letter-spacing: -5px;
+            text-transform: uppercase;
+        }
+
+        .outline-text {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            color: transparent;
+        }
+
+        /* SKILLS SECTION (HORIZONAL) */
+        .skills-section {
+            padding: 100px 0;
+            background: #050505;
+        }
+
+        .skill-row {
+            display: flex;
+            white-space: nowrap;
+            font-size: 10vw;
+            font-family: 'Syncopate';
+            color: rgba(255,255,255,0.05);
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .skill-item {
+            padding: 0 50px;
+            transition: 0.5s;
+        }
+
+        .skill-item:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        /* CINEMATIC GRID */
+        .work-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 50px;
+        }
+
+        .work-card {
+            height: 600px;
+            background: #111;
+            overflow: hidden;
+            position: relative;
+            border-radius: 20px;
+        }
+
+        .work-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: 1s;
+        }
+
+        .work-card:hover img { transform: scale(1.1); filter: blur(5px); }
+
+        .work-info {
+            position: absolute; bottom: 40px; left: 40px;
+            opacity: 0; transition: 0.5s;
+        }
+
+        .work-card:hover .work-info { opacity: 1; }
+
+        /* FOOTER */
+        footer {
+            height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            flex-direction: column;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .contact-btn {
+            font-size: 5vw;
+            text-decoration: none;
+            color: white;
+            font-family: 'Syncopate';
+            border-bottom: 5px solid var(--neon-pink);
+            transition: 0.5s;
+        }
+
+        .contact-btn:hover {
+            color: var(--neon-pink);
+            letter-spacing: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="preloader">INITIALIZING_REALITY_...</div>
+
+    <section class="hero">
+        <div class="main-img-container" id="hero-img">
+            <img src="input_file_0.png" class="main-img" alt="Architect">
+            <div class="glitch-overlay" id="glitch"></div>
+        </div>
+        <div class="title-wrap">
+            <h1 class="reveal">THE</h1>
+            <h1 class="reveal outline-text">ARCHITECT</h1>
+        </div>
+    </section>
+
+    <section class="skills-section">
+        <div class="skill-row" id="row1">
+            <div class="skill-item">WEB_DEVELOPMENT</div>
+            <div class="skill-item">WEB_DEVELOPMENT</div>
+            <div class="skill-item">WEB_DEVELOPMENT</div>
+        </div>
+        <div class="skill-row" id="row2" style="margin-left: -500px;">
+            <div class="skill-item">VIDEO_EDITING</div>
+            <div class="skill-item">VIDEO_EDITING</div>
+            <div class="skill-item">VIDEO_EDITING</div>
+        </div>
+        <div class="skill-row" id="row3">
+            <div class="skill-item">AI_PROMPT_ENGINEER</div>
+            <div class="skill-item">AI_PROMPT_ENGINEER</div>
+            <div class="skill-item">AI_PROMPT_ENGINEER</div>
+        </div>
+    </section>
+
+    <section class="work-grid">
+        <div class="work-card scroll-reveal">
+            <img src="input_file_1.png" alt="Project 1">
+            <div class="work-info">
+                <h2>VISUAL_CONSTRUCT_01</h2>
+                <p>AI Neural Mapping Interface</p>
+            </div>
+        </div>
+        <div class="work-card scroll-reveal" style="margin-top: 100px;">
+            <img src="input_file_0.png" alt="Project 2">
+            <div class="work-info">
+                <h2>CORE_SYSTEMS</h2>
+                <p>High-End Web Architecture</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p style="color: var(--text-gray); letter-spacing: 10px; margin-bottom: 20px;">WANT_TO_COLLABORATE?</p>
+        <a href="mailto:your@email.com" class="contact-btn">ESTABLISH_LINK</a>
+        <p style="margin-top: 100px; opacity: 0.3;">© 2026 ARCHITECT_CORE. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        // CURSOR LOGIC
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // PRELOADER
+        window.addEventListener('load', () => {
+            gsap.to("#preloader", { duration: 1.5, y: "-100%", ease: "expo.inOut", delay: 1 });
+            initAnimations();
+        });
+
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero Image Floating
+            gsap.to("#hero-img", {
+                y: -20,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+
+            // Reveal Text
+            gsap.from(".reveal", {
+                duration: 1.5,
+                y: 200,
+                skewY: 10,
+                stagger: 0.2,
+                ease: "power4.out",
+                delay: 1.8
+            });
+
+            // Glitch Effect on Scroll
+            gsap.to("#glitch", {
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                },
+                opacity: 1,
+                x: 10,
+                skewX: 20
+            });
+
+            // Marquee Animation
+            gsap.to("#row1", { x: -500, scrollTrigger: { scrub: 1 } });
+            gsap.to("#row2", { x: 500, scrollTrigger: { scrub: 1 } });
+            gsap.to("#row3", { x: -300, scrollTrigger: { scrub: 1 } });
+
+            // Grid Cards Reveal
+            gsap.utils.toArray(".scroll-reveal").forEach(card => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                    },
+                    y: 100,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power3.out"
+                });
+            });
+        }
+    </script>
+</body>
+</html>
